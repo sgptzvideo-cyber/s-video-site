@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Презентационное видео о вашем деле — «С-Видео»</title>
+<meta name="description" content="Создаём видео, которое доносит до зрителя смыслы вашего бизнеса">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-2:#111113;
+    --fg:#f2f0eb;
+    --muted:#9a9a9f;
+    --teal:#2ee6d6;
+    --orange:#ff7a3c;
+    --gold:#f4c04a;
+    --line:rgba(255,255,255,.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{ background:var(--bg); scroll-behavior:smooth; }
+
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(46,230,214,.08), transparent 45%),
+      radial-gradient(ellipse at 85% 15%, rgba(255,122,60,.08), transparent 45%),
+      var(--bg);
+    color:var(--fg);
+    font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .grain{
+    position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.045; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Visible by default (safe fallback if JS fails). JS only hides
+     below-the-fold content via .pre-reveal, then reveals it on scroll. */
+  .reveal{
+    transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.pre-reveal{ opacity:0; transform:translateY(28px); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .reveal.d1{transition-delay:.08s}
+  .reveal.d2{transition-delay:.16s}
+  .reveal.d3{transition-delay:.24s}
+  .reveal.d4{transition-delay:.32s}
+
+  section{ padding:100px 6vw; position:relative; }
+
+  .wrap{ max-width:1080px; margin:0 auto; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:96svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 6vw 60px;
+  }
+  .kicker{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border:1px solid var(--line);
+    padding:8px 18px;
+    border-radius:999px;
+    margin-bottom:28px;
+  }
+  .kicker b{ color:var(--orange); font-weight:700; }
+
+  h1{
+    font-size:clamp(2.1rem, 5.4vw, 3.6rem);
+    font-weight:800;
+    line-height:1.12;
+    letter-spacing:-.01em;
+    max-width:900px;
+    background:linear-gradient(100deg, var(--teal) 0%, var(--fg) 40%, var(--orange) 70%, var(--gold) 100%);
+    background-size:220% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:shine 8s ease-in-out infinite;
+    filter:drop-shadow(0 0 30px rgba(46,230,214,.18));
+  }
+  @keyframes shine{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+  .hero p.lead{
+    margin-top:22px;
+    max-width:640px;
+    font-size:clamp(1.05rem, 2.2vw, 1.3rem);
+    color:var(--muted);
+    line-height:1.6;
+  }
+
+  .hero-cta{ margin-top:44px; }
+
+  /* ---------- CTA BUTTON ---------- */
+  .cta{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    padding:20px 46px;
+    font-size:1.05rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:#0a0a0a;
+    background:linear-gradient(100deg, var(--teal), var(--gold), var(--orange));
+    background-size:220% auto;
+    border:none;
+    border-radius:999px;
+    text-decoration:none;
+    overflow:hidden;
+    isolation:isolate;
+    box-shadow:0 10px 40px rgba(255,122,60,.25), 0 0 0 1px rgba(255,255,255,.06);
+    animation:pulse-glow 3.2s ease-in-out infinite;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), background-position .6s ease;
+  }
+  .cta:hover{ transform:translateY(-4px) scale(1.04); background-position:100% 50%; }
+  .cta:active{ transform:translateY(-1px) scale(.98); }
+  .cta svg{ width:20px; height:20px; fill:#0a0a0a; }
+  .cta::before{
+    content:"";
+    position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+    transform:skewX(-20deg);
+    animation:sweep 3.2s ease-in-out infinite;
+  }
+  @keyframes sweep{ 0%{left:-60%} 45%{left:130%} 100%{left:130%} }
+  @keyframes pulse-glow{
+    0%,100%{box-shadow:0 10px 40px rgba(255,122,60,.22), 0 0 0 1px rgba(255,255,255,.06);}
+    50%{box-shadow:0 10px 55px rgba(46,230,214,.35), 0 0 0 1px rgba(255,255,255,.1);}
+  }
+
+  .contact-links{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:26px;
+    margin-top:26px;
+  }
+  .contact-links a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--muted);
+    text-decoration:none;
+    font-size:.98rem;
+    transition:color .3s ease;
+  }
+  .contact-links a svg{ width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; }
+  .contact-links a:hover{ color:var(--teal); }
+
+  /* ---------- SECTION HEAD ---------- */
+  .section-head{ max-width:760px; margin:0 auto 56px; text-align:center; }
+  .section-tag{
+    display:inline-block; font-size:11px; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--orange); margin-bottom:14px;
+  }
+  .section-title{ font-size:clamp(1.7rem, 3.6vw, 2.5rem); font-weight:800; letter-spacing:-.01em; }
+  .section-sub{ margin-top:14px; color:var(--muted); font-size:1.05rem; line-height:1.6; }
+
+  /* ---------- ADVANTAGES ---------- */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  .card{
+    position:relative;
+    background:linear-gradient(165deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:34px 28px;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(255,255,255,.22);
+    box-shadow:0 24px 50px rgba(0,0,0,.45), 0 0 40px rgba(46,230,214,.1);
+  }
+  .card-icon{
+    width:56px; height:56px;
+    border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(46,230,214,.14), rgba(255,122,60,.14));
+    border:1px solid var(--line);
+    margin-bottom:22px;
+  }
+  .card-icon svg{ width:28px; height:28px; fill:none; stroke:url(#iconGrad); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .card h3{ font-size:1.15rem; font-weight:700; line-height:1.35; margin-bottom:12px; }
+  .card p{ font-size:.94rem; color:var(--muted); line-height:1.65; }
+  .card .stat{
+    font-size:2.4rem; font-weight:800;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:8px;
+    display:block;
+  }
+
+  @media (max-width:900px){
+    .cards{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- AUDIENCE ---------- */
+  .audience{ background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .audience-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  .audience-item{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    padding:22px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:rgba(255,255,255,.02);
+    transition:border-color .3s ease, transform .3s ease;
+  }
+  .audience-item:hover{ border-color:rgba(46,230,214,.35); transform:translateY(-3px); }
+  .audience-item .check{
+    flex:none;
+    width:32px; height:32px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--teal), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .audience-item .check svg{ width:16px; height:16px; stroke:#0a0a0a; fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+  .audience-item h4{ font-size:1.02rem; font-weight:700; margin-bottom:6px; }
+  .audience-item p{ font-size:.9rem; color:var(--muted); line-height:1.55; }
+
+  @media (max-width:760px){
+    .audience-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{ text-align:center; padding-bottom:130px; }
+  .final-cta .section-title{ margin-bottom:16px; }
+
+  footer{
+    text-align:center;
+    padding:30px 6vw 44px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:.8rem;
+    letter-spacing:.05em;
+  }
+
+  @media (max-width:600px){
+    section{ padding:70px 6vw; }
+    .cta{ padding:18px 32px; font-size:.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="iconGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2ee6d6"/>
+      <stop offset="100%" stop-color="#ff7a3c"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kicker">Видеопродакшн <b>«С-Видео»</b></div>
+  <h1>Презентационное видео о вашем деле</h1>
+  <p class="lead">Создаём видео, которое доносит до зрителя смыслы вашего бизнеса — и превращает просмотр в доверие, заявку или продажу.</p>
+
+  <div class="hero-cta">
+    <a class="cta" href="mailto:sgptz@yandex.ru?subject=Презентационное%20видео%20для%20бизнеса">
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+      Оставить заявку
+    </a>
+  </div>
+
+  <div class="contact-links">
+    <a href="mailto:sgptz@yandex.ru">
+      <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg>
+      sgptz@yandex.ru
+    </a>
+    <a href="tel:+79216232171">
+      <svg viewBox="0 0 24 24"><path d="M6 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2z"/></svg>
+      8 921 623 21 71
+    </a>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Почему мы</span>
+      <h2 class="section-title">Три причины доверить видео нам</h2>
+      <p class="section-sub">Не просто красивая картинка — а инструмент, который решает задачи вашего бизнеса.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal d1">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <h3>Креативность, которая работает на результат, а не ради «красиво»</h3>
+        <p>Мы не просто придумываем эффектные кадры: каждый визуальный приём и сценарный ход заточен на то, чтобы донести ключевое сообщение и подтолкнуть зрителя к нужному действию — заявке, переходу на сайт, доверию к бренду. В итоге видео становится не просто «картинкой», а инструментом продаж и позиционирования.</p>
+      </div>
+
+      <div class="card reveal d2">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l4-4 4 4"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+        </div>
+        <h3>Опыт работы с федеральными телеканалами</h3>
+        <p>Уровень качества и дисциплины — как у крупных игроков. Работа на федеральном уровне означает строгие дедлайны, высокие требования к картинке и звуку, а также умение упаковывать сложные смыслы в понятный зрителю формат. Этот опыт мы переносим в коммерческие проекты: вы получаете качество, сопоставимое с ТВ-роликами, но в более гибких и быстрых условиях продакшена.</p>
+      </div>
+
+      <div class="card reveal d3">
+        <span class="stat">8+</span>
+        <div class="card-icon" style="margin-top:-4px;">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L12 15.9 6.4 19l1.4-6.3-4.8-4.3 6.4-.6z"/></svg>
+        </div>
+        <h3>Более 8 лет на рынке видеопроизводства</h3>
+        <p>Работаем на результат — от идеи до финального монтажа. За это время мы выстроили процессы так, чтобы минимизировать риски и лишние правки: у нас есть отработанные сценарии для разных ниш, понимание, какие форматы лучше работают в соцсетях и на сайтах, и команда, которая закрывает все этапы без потери качества. Вы экономите время и нервы — мы заранее знаем, где могут быть «подводные камни».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="audience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Кому подходит</span>
+      <h2 class="section-title">Для кого это видео и почему выгодно</h2>
+      <p class="section-sub">Формат одинаково хорошо работает на разных этапах роста бизнеса.</p>
+    </div>
+
+    <div class="audience-grid">
+      <div class="audience-item reveal d1">
+        <div class="check"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></div>
+        <div>
+          <h4>Собственникам и руководителям бизнеса</h4>
+          <p>За 60–90 секунд объясняете суть компании клиентам, партнёрам и инвесторам — не тратя время на долгие переговоры.</p>
+        </div>
+      </div>
+
+      <div class="audience-item reveal d2">
+        <div class="check"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></div>
+        <div>
+          <h4>Отделам маркетинга и продаж</h4>
+          <p>Видео повышает конверсию лендинга и ускоряет цикл сделки, снимая возражения ещё до звонка менеджера.</p>
+        </div>
+      </div>
+
+      <div class="audience-item reveal d3">
+        <div class="check"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></div>
+        <div>
+          <h4>Стартапам, которые привлекают инвестиции</h4>
+          <p>Сильная подача идеи с первых секунд повышает шанс получить встречу с инвестором и финансирование.</p>
+        </div>
+      </div>
+
+      <div class="audience-item reveal d4">
+        <div class="check"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></div>
+        <div>
+          <h4>Компаниям, растущим в соцсетях и на маркетплейсах</h4>
+          <p>Один ролик легко режется на форматы под сайт, Reels, VK и презентации — вы экономите бюджет на съёмках.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="section-head reveal" style="margin-bottom:36px;">
+    <span class="section-tag">Начать проект</span>
+    <h2 class="section-title">Готовы обсудить видео для вашего бизнеса?</h2>
+    <p class="section-sub">Расскажите о задаче — предложим формат, сроки и смету.</p>
+  </div>
+
+  <a class="cta reveal" href="mailto:sgptz@yandex.ru?subject=Презентационное%20видео%20для%20бизнеса">
+    <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+    Оставить заявку
+  </a>
+
+  <div class="contact-links reveal">
+    <a href="mailto:sgptz@yandex.ru">
+      <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg>
+      sgptz@yandex.ru
+    </a>
+    <a href="tel:+79216232171">
+      <svg viewBox="0 0 24 24"><path d="M6 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2z"/></svg>
+      8 921 623 21 71
+    </a>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> Видеопродакшн «С-Видео» — презентационные видео для бизнеса
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  try {
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach(el => {
+      if (el.getBoundingClientRect().top > window.innerHeight * 0.92) {
+        el.classList.add('pre-reveal');
+      }
+    });
+    function checkReveal(){
+      revealEls.forEach(el => {
+        if (!el.classList.contains('pre-reveal')) return;
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
+          el.classList.remove('pre-reveal');
+          el.classList.add('in-view');
+        }
+      });
+    }
+    window.addEventListener('scroll', checkReveal, { passive:true });
+    window.addEventListener('resize', checkReveal);
+  } catch(e) {}
+</script>
+
+</body>
+</html>
