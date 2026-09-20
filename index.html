@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>«С-Видео» — видеопродакшн Святослава Гребешова</title>
+<meta name="description" content="Снимаем видео, которое продаёт: рекламные ролики, презентационные фильмы, корпоративное видео и свадебные истории. 18 лет опыта, съёмки для Первого канала, «России 1» и НТВ.">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-2:#111113;
+    --fg:#f2f0eb;
+    --muted:#9a9a9f;
+    --teal:#2ee6d6;
+    --orange:#ff7a3c;
+    --gold:#f4c04a;
+    --line:rgba(255,255,255,.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{ background:var(--bg); scroll-behavior:smooth; }
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(46,230,214,.08), transparent 45%),
+      radial-gradient(ellipse at 85% 15%, rgba(255,122,60,.08), transparent 45%),
+      var(--bg);
+    color:var(--fg);
+    font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .grain{
+    position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.045; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  a{ color:inherit; }
+  section{ padding:100px 6vw; position:relative; }
+  .wrap{ max-width:1100px; margin:0 auto; }
+
+  .reveal{ transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.pre-reveal{ opacity:0; transform:translateY(28px); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .reveal.d1{transition-delay:.08s} .reveal.d2{transition-delay:.16s}
+  .reveal.d3{transition-delay:.24s} .reveal.d4{transition-delay:.32s}
+
+  /* ---------- NAV ---------- */
+  nav.topnav{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    background:rgba(10,10,10,.72);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1200px; margin:0 auto;
+    padding:14px 6vw;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .brand img{ width:36px; height:36px; object-fit:contain; }
+  .brand span{ font-weight:800; font-size:1.05rem; letter-spacing:-.01em; }
+
+  .nav-links{ display:flex; align-items:center; gap:32px; }
+  .nav-links a{
+    font-size:.92rem; color:var(--muted); text-decoration:none;
+    transition:color .25s ease;
+  }
+  .nav-links a:hover{ color:var(--teal); }
+
+  .nav-cta{
+    display:inline-flex; align-items:center;
+    padding:10px 22px;
+    font-size:.88rem; font-weight:700;
+    color:#0a0a0a;
+    background:linear-gradient(100deg, var(--teal), var(--gold), var(--orange));
+    background-size:220% auto;
+    border-radius:999px; text-decoration:none;
+    transition:background-position .5s ease, transform .3s ease;
+  }
+  .nav-cta:hover{ background-position:100% 50%; transform:translateY(-2px); }
+
+  .menu-btn{
+    display:none; background:none; border:none; color:var(--fg);
+    width:40px; height:40px; cursor:pointer;
+  }
+  .menu-btn svg{ width:24px; height:24px; }
+
+  .mobile-panel{
+    position:fixed; top:0; right:0; bottom:0;
+    width:78%; max-width:320px;
+    background:rgba(10,10,10,.98);
+    border-left:1px solid var(--line);
+    z-index:1100;
+    padding:90px 32px 32px;
+    display:flex; flex-direction:column; gap:26px;
+    transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .mobile-panel.open{ transform:translateX(0); }
+  .mobile-panel a{ font-size:1.1rem; text-decoration:none; color:var(--fg); }
+  .mobile-close{
+    position:absolute; top:20px; right:20px;
+    background:none; border:none; color:var(--fg); width:36px; height:36px; cursor:pointer;
+  }
+  .mobile-close svg{ width:22px; height:22px; }
+  .scrim{
+    position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:1050;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .scrim.open{ opacity:1; pointer-events:auto; }
+
+  @media (max-width:860px){
+    .nav-links, .nav-cta{ display:none; }
+    .menu-btn{ display:block; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:120px 6vw 60px;
+  }
+  .hero-deco{
+    position:absolute; top:50%; left:50%;
+    width:min(900px, 130vw); height:min(900px, 130vw);
+    transform:translate(-50%,-50%);
+    opacity:.14; z-index:0; pointer-events:none;
+    animation:hero-spin 140s linear infinite;
+  }
+  @keyframes hero-spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+  .hero-content{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
+
+  .kicker{
+    display:inline-block; font-size:12px; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--muted); border:1px solid var(--line); padding:8px 18px; border-radius:999px;
+    margin-bottom:28px;
+  }
+  .kicker b{ color:var(--orange); font-weight:700; }
+
+  h1{
+    font-size:clamp(2.1rem, 5.4vw, 3.6rem); font-weight:800; line-height:1.12; letter-spacing:-.01em;
+    max-width:900px;
+    background:linear-gradient(100deg, var(--teal) 0%, var(--fg) 40%, var(--orange) 70%, var(--gold) 100%);
+    background-size:220% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shine 8s ease-in-out infinite;
+    filter:drop-shadow(0 0 30px rgba(46,230,214,.18));
+  }
+  @keyframes shine{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+  .hero p.lead{
+    margin-top:22px; max-width:640px; font-size:clamp(1.05rem, 2.2vw, 1.3rem);
+    color:var(--muted); line-height:1.6;
+  }
+
+  .hero-cta{ margin-top:44px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
+
+  .cta{
+    position:relative; display:inline-flex; align-items:center; gap:12px;
+    padding:20px 46px; font-size:1.05rem; font-weight:700; letter-spacing:.02em;
+    color:#0a0a0a;
+    background:linear-gradient(100deg, var(--teal), var(--gold), var(--orange));
+    background-size:220% auto; border:none; border-radius:999px; text-decoration:none;
+    overflow:hidden; isolation:isolate;
+    box-shadow:0 10px 40px rgba(255,122,60,.25), 0 0 0 1px rgba(255,255,255,.06);
+    animation:pulse-glow 3.2s ease-in-out infinite;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), background-position .6s ease;
+  }
+  .cta:hover{ transform:translateY(-4px) scale(1.04); background-position:100% 50%; }
+  .cta:active{ transform:translateY(-1px) scale(.98); }
+  .cta svg{ width:20px; height:20px; fill:#0a0a0a; }
+  .cta::before{
+    content:""; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+    transform:skewX(-20deg); animation:sweep 3.2s ease-in-out infinite;
+  }
+  @keyframes sweep{ 0%{left:-60%} 45%{left:130%} 100%{left:130%} }
+  @keyframes pulse-glow{
+    0%,100%{box-shadow:0 10px 40px rgba(255,122,60,.22), 0 0 0 1px rgba(255,255,255,.06);}
+    50%{box-shadow:0 10px 55px rgba(46,230,214,.35), 0 0 0 1px rgba(255,255,255,.1);}
+  }
+  .cta-secondary{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:18px 38px; font-size:1rem; font-weight:600;
+    color:var(--fg); background:rgba(255,255,255,.05);
+    border:1px solid var(--line); border-radius:999px; text-decoration:none;
+    transition:all .3s ease;
+  }
+  .cta-secondary:hover{ background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.25); transform:translateY(-3px); }
+
+  .stat-row{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;
+    max-width:640px; margin:72px auto 0; padding-top:36px;
+    border-top:1px solid var(--line);
+  }
+  .stat-row .num{
+    font-size:clamp(1.8rem, 4vw, 2.4rem); font-weight:800;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat-row .label{ font-size:.85rem; color:var(--muted); margin-top:6px; }
+
+  /* ---------- SECTION HEAD ---------- */
+  .section-head{ max-width:760px; margin:0 auto 56px; text-align:center; }
+  .section-tag{
+    display:inline-block; font-size:11px; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--orange); margin-bottom:14px;
+  }
+  .section-title{ font-size:clamp(1.7rem, 3.6vw, 2.5rem); font-weight:800; letter-spacing:-.01em; }
+  .section-sub{ margin-top:14px; color:var(--muted); font-size:1.05rem; line-height:1.6; }
+
+  /* ---------- PORTFOLIO ---------- */
+  #portfolio{ background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .portfolio-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:28px; }
+  .portfolio-card{
+    background:linear-gradient(165deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease;
+  }
+  .portfolio-card:hover{
+    transform:translateY(-6px); border-color:rgba(255,255,255,.22);
+    box-shadow:0 24px 50px rgba(0,0,0,.45), 0 0 40px rgba(46,230,214,.1);
+  }
+  .video-wrap{ position:relative; width:100%; aspect-ratio:16/9; background:#000; }
+  .video-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:none; }
+  .portfolio-info{ padding:22px 26px; cursor:pointer; }
+  .portfolio-info .tag{ display:inline-block; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); margin-bottom:10px; }
+  .portfolio-info h3{ font-size:1.15rem; font-weight:700; line-height:1.35; }
+  .portfolio-info p{
+    font-size:.92rem; color:var(--muted); line-height:1.6;
+    max-height:0; opacity:0; margin-top:0; overflow:hidden;
+    transition:max-height .45s cubic-bezier(.2,.7,.2,1), opacity .35s ease, margin-top .35s ease;
+  }
+  .portfolio-card:hover .portfolio-info p, .portfolio-card.is-open .portfolio-info p{ max-height:120px; opacity:1; margin-top:10px; }
+
+  .channels{ text-align:center; margin-top:56px; }
+  .channels h3{
+    font-size:clamp(1.3rem, 3vw, 1.7rem); font-weight:800; margin-bottom:26px;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent; display:inline-block;
+  }
+  .channel-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px; }
+  .channel-btn{
+    display:inline-flex; align-items:center; gap:10px; padding:14px 28px;
+    background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:12px;
+    color:var(--fg); text-decoration:none; font-weight:600; font-size:.92rem;
+    transition:all .3s ease;
+  }
+  .channel-btn:hover{ background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.25); transform:translateY(-3px); }
+
+  @media (max-width:760px){ .portfolio-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- ADVANTAGES ---------- */
+  .cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+  .card{
+    position:relative;
+    background:linear-gradient(165deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--line); border-radius:18px; padding:34px 28px;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{ transform:translateY(-8px); border-color:rgba(255,255,255,.22); box-shadow:0 24px 50px rgba(0,0,0,.45), 0 0 40px rgba(46,230,214,.1); }
+  .card-icon{
+    width:56px; height:56px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(46,230,214,.14), rgba(255,122,60,.14));
+    border:1px solid var(--line); margin-bottom:22px;
+  }
+  .card-icon svg{ width:28px; height:28px; fill:none; stroke:url(#iconGrad); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .card h3{ font-size:1.15rem; font-weight:700; line-height:1.35; margin-bottom:12px; }
+  .card p{ font-size:.94rem; color:var(--muted); line-height:1.65; }
+  .card .stat{
+    font-size:2.4rem; font-weight:800;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:8px; display:block;
+  }
+  @media (max-width:900px){ .cards{ grid-template-columns:1fr; } }
+
+  /* ---------- PROCESS ---------- */
+  #process{ background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .process-list{ display:grid; grid-template-columns:repeat(4, 1fr); gap:24px; }
+  .process-step{ text-align:center; padding:0 12px; }
+  .process-num{
+    width:52px; height:52px; margin:0 auto 18px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:1.1rem; color:#0a0a0a;
+    background:linear-gradient(135deg, var(--teal), var(--gold));
+  }
+  .process-step h4{ font-size:1rem; font-weight:700; margin-bottom:8px; }
+  .process-step p{ font-size:.88rem; color:var(--muted); line-height:1.6; }
+  @media (max-width:760px){ .process-list{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .process-list{ grid-template-columns:1fr; } }
+
+  /* ---------- PRICING ---------- */
+  .price-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:24px; }
+  .price-card{
+    position:relative;
+    background:linear-gradient(165deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--line); border-radius:18px; padding:34px 30px;
+    display:flex; flex-direction:column;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease;
+  }
+  .price-card:hover{ transform:translateY(-6px); border-color:rgba(255,255,255,.22); box-shadow:0 24px 50px rgba(0,0,0,.45), 0 0 40px rgba(46,230,214,.1); }
+  .price-card h3{ font-size:1.2rem; font-weight:700; margin-bottom:10px; }
+  .price-card .price{
+    font-size:2rem; font-weight:800;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:14px; display:block;
+  }
+  .price-card p{ font-size:.95rem; color:var(--muted); line-height:1.65; flex-grow:1; }
+  .price-card .tag{ display:inline-block; align-self:flex-start; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); margin-bottom:16px; }
+  @media (max-width:760px){ .price-grid{ grid-template-columns:1fr; } }
+  .price-note{ max-width:720px; margin:40px auto 0; text-align:center; color:var(--muted); font-size:.92rem; line-height:1.7; border-top:1px solid var(--line); padding-top:32px; }
+
+  /* ---------- ABOUT ---------- */
+  #about{ background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .about-grid{ display:grid; grid-template-columns:220px 1fr; gap:44px; align-items:start; }
+  .about-photo{
+    width:220px; height:220px; border-radius:20px; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .about-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .about-text h2{ font-size:clamp(1.6rem, 3.2vw, 2.2rem); font-weight:800; margin-bottom:16px; }
+  .about-text p{ color:var(--muted); font-size:1rem; line-height:1.7; margin-bottom:14px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+  .chip{
+    font-size:.85rem; padding:8px 16px; border-radius:999px;
+    border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--fg);
+  }
+  @media (max-width:700px){
+    .about-grid{ grid-template-columns:1fr; justify-items:center; text-align:center; }
+    .chips{ justify-content:center; }
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{ border-bottom:1px solid var(--line); padding:20px 4px; }
+  .faq-item summary{
+    cursor:pointer; font-weight:700; font-size:1.02rem; list-style:none;
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::after{ content:'+'; color:var(--orange); font-size:1.4rem; flex:none; transition:transform .3s ease; }
+  .faq-item[open] summary::after{ transform:rotate(45deg); }
+  .faq-item p{ margin-top:14px; color:var(--muted); line-height:1.7; font-size:.94rem; }
+  .faq-list{ max-width:760px; margin:0 auto; }
+
+  /* ---------- CONTACT ---------- */
+  #contact{ background:var(--bg-2); border-top:1px solid var(--line); }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1.4fr; gap:32px; align-items:start; }
+  .contact-info{ display:flex; flex-direction:column; gap:18px; }
+  .contact-card{
+    display:flex; gap:16px; align-items:flex-start;
+    background:rgba(255,255,255,.03); border:1px solid var(--line); border-radius:16px; padding:22px;
+  }
+  .contact-card .icon{
+    width:46px; height:46px; border-radius:12px; flex:none;
+    background:rgba(255,122,60,.1); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .contact-card .icon svg{ width:22px; height:22px; stroke:var(--orange); fill:none; stroke-width:1.8; }
+  .contact-card h4{ font-size:.98rem; font-weight:700; margin-bottom:4px; }
+  .contact-card p{ font-size:.9rem; color:var(--muted); }
+  .contact-card a{ text-decoration:none; }
+  .contact-card a:hover{ color:var(--teal); }
+  .form-wrap iframe{ width:100%; height:800px; border:none; border-radius:16px; background:rgba(255,255,255,.03); }
+  @media (max-width:900px){ .contact-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:44px 6vw; border-top:1px solid var(--line); }
+  .footer-inner{
+    max-width:1100px; margin:0 auto;
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .footer-brand{ display:flex; align-items:center; gap:10px; }
+  .footer-brand img{ width:32px; height:32px; object-fit:contain; }
+  .footer-brand span{ font-weight:800; }
+  .footer-copy{ color:var(--muted); font-size:.8rem; margin-left:14px; }
+  .footer-social{ display:flex; gap:14px; }
+  .footer-social a{
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(255,255,255,.04); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    text-decoration:none; transition:all .3s ease;
+  }
+  .footer-social a:hover{ background:var(--orange); border-color:var(--orange); }
+  .footer-social a:hover svg{ fill:#0a0a0a; }
+  .footer-social svg{ width:18px; height:18px; fill:var(--fg); transition:fill .3s ease; }
+
+  @media (max-width:600px){
+    section{ padding:70px 6vw; }
+    .cta, .price-card, .card{ padding:18px 28px; }
+    .footer-inner{ flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="iconGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2ee6d6"/>
+      <stop offset="100%" stop-color="#ff7a3c"/>
+    </linearGradient>
+    <linearGradient id="apertureGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2ee6d6"/>
+      <stop offset="50%" stop-color="#f4c04a"/>
+      <stop offset="100%" stop-color="#ff7a3c"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="nav-inner">
+    <a href="#" class="brand">
+      <img src="images/logo.png" alt="С-Видео">
+      <span>С-Видео</span>
+    </a>
+    <div class="nav-links">
+      <a href="#portfolio">Портфолио</a>
+      <a href="#pricing">Цены</a>
+      <a href="#about">Обо мне</a>
+      <a href="#contact">Контакты</a>
+    </div>
+    <a href="#contact" class="nav-cta">Обсудить проект</a>
+    <button class="menu-btn" id="menuOpenBtn" aria-label="Меню">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-panel" id="mobilePanel">
+  <button class="mobile-close" id="menuCloseBtn" aria-label="Закрыть">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <a href="#portfolio" class="mobile-link">Портфолио</a>
+  <a href="#pricing" class="mobile-link">Цены</a>
+  <a href="#about" class="mobile-link">Обо мне</a>
+  <a href="#contact" class="mobile-link">Контакты</a>
+  <a href="#contact" class="cta mobile-link" style="justify-content:center;">Обсудить проект</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <svg class="hero-deco" viewBox="0 0 400 400" aria-hidden="true">
+    <circle cx="200" cy="200" r="180" fill="none" stroke="url(#apertureGrad)" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="150" fill="none" stroke="url(#apertureGrad)" stroke-width="1"/>
+    <g stroke="url(#apertureGrad)" stroke-width="3" stroke-linecap="round">
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(0 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(45 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(90 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(135 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(180 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(225 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(270 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(315 200 200)"/>
+    </g>
+    <g fill="url(#apertureGrad)" opacity=".55">
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(0 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(51.4 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(102.8 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(154.2 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(205.6 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(257 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(308.4 200 200)"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <div class="kicker">Видеопродакшн <b>«С-Видео»</b></div>
+    <h1>Снимаем видео,<br>которое продаёт</h1>
+    <p class="lead">Рекламные ролики, презентационные фильмы, корпоративное видео и свадебные истории. 18 лет опыта, съёмки для Первого канала, «России 1» и НТВ.</p>
+
+    <div class="hero-cta">
+      <a class="cta" href="#portfolio">
+        <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+        Смотреть портфолио
+      </a>
+      <a class="cta-secondary" href="#contact">Оставить заявку</a>
+    </div>
+
+    <div class="stat-row">
+      <div><div class="num">18+</div><div class="label">лет на рынке</div></div>
+      <div><div class="num">250+</div><div class="label">реализованных проектов</div></div>
+      <div><div class="num">4K</div><div class="label">качество съёмки</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Наши работы</span>
+      <h2 class="section-title">Портфолио</h2>
+      <p class="section-sub">Каждый проект — своя история и своя задача. Наведите на карточку, чтобы увидеть подробности.</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-card reveal d1">
+        <div class="video-wrap">
+          <iframe src="https://vkvideo.ru/video_ext.php?oid=-14036747&id=456239108&hash=ff6ebc79f808c635" allow="clipboard-write; autoplay" allowfullscreen loading="lazy" title="Беломорско-Балтийский канал 90 лет"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Документальный фильм</span>
+          <h3>Беломорско-Балтийский канал — 90 лет</h3>
+          <p>Сценарий, съёмка, озвучание, монтаж, цветокоррекция.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal d2">
+        <div class="video-wrap">
+          <iframe src="https://vkvideo.ru/video_ext.php?oid=-14036747&id=456239113&hash=39a062ddc76def15" allow="clipboard-write; autoplay" allowfullscreen loading="lazy" title="Дни Эрмитажа в Петрозаводске"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Видео о событии</span>
+          <h3>Дни Эрмитажа в Петрозаводске — проект Росатома и Республики Карелия</h3>
+          <p>Сценарий, видеосъёмка, монтаж, цветокоррекция.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal d3">
+        <div class="video-wrap">
+          <iframe src="https://rutube.ru/play/embed/3076869dc47e68226e300b2ea06e2c68" allow="clipboard-write; autoplay" allowfullscreen loading="lazy" title="Свадебный фильм премиум-класса"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Свадебное видео</span>
+          <h3>Свадебный фильм премиум-класса</h3>
+          <p>Кинематографичная съёмка, монтаж.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal d4">
+        <div class="video-wrap">
+          <iframe src="https://rutube.ru/play/embed/82d1f4805a1ded31ea4a23a1f92cd064" allow="clipboard-write; autoplay" allowfullscreen loading="lazy" title="Рекламный ролик для Мегафон"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Реклама</span>
+          <h3>Рекламный ролик для компании «Мегафон»</h3>
+          <p>Съёмка, видеомонтаж.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="channels reveal">
+      <h3>Больше работ — на наших каналах</h3>
+      <div class="channel-links">
+        <a class="channel-btn" href="https://vkvideo.ru/@ptzvideo/all" target="_blank" rel="noopener">VK Видео</a>
+        <a class="channel-btn" href="https://rutube.ru/channel/24044213/videos/" target="_blank" rel="noopener">RuTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Почему мы</span>
+      <h2 class="section-title">Три причины доверить видео нам</h2>
+      <p class="section-sub">Не просто красивая картинка — а инструмент, который решает задачи вашего бизнеса.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal d1">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <h3>Креативность, которая работает на результат</h3>
+        <p>Каждый визуальный приём и сценарный ход заточен на то, чтобы донести ключевое сообщение и подтолкнуть зрителя к нужному действию — заявке, переходу на сайт, доверию к бренду.</p>
+      </div>
+
+      <div class="card reveal d2">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l4-4 4 4"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+        </div>
+        <h3>Опыт работы с федеральными телеканалами</h3>
+        <p>Снимали для Первого канала, «России 1» и НТВ. Этот уровень дисциплины и качества переносим в коммерческие проекты — вы получаете результат, сопоставимый с ТВ-роликами, но в более гибких условиях.</p>
+      </div>
+
+      <div class="card reveal d3">
+        <span class="stat">18+</span>
+        <div class="card-icon" style="margin-top:-4px;">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L12 15.9 6.4 19l1.4-6.3-4.8-4.3 6.4-.6z"/></svg>
+        </div>
+        <h3>Более 18 лет на рынке и 250+ проектов</h3>
+        <p>Среди заказчиков — Федеральное казначейство России, Петрозаводский государственный университет, Карельская государственная филармония и другие. Процессы выстроены так, чтобы минимизировать риски и лишние правки.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Как проходит работа</span>
+      <h2 class="section-title">Четыре понятных шага</h2>
+    </div>
+
+    <div class="process-list">
+      <div class="process-step reveal d1">
+        <div class="process-num">1</div>
+        <h4>Заявка и бриф</h4>
+        <p>Рассказываете о задаче, я уточняю детали.</p>
+      </div>
+      <div class="process-step reveal d2">
+        <div class="process-num">2</div>
+        <h4>Сценарий и смета</h4>
+        <p>Присылаю план видео и точную стоимость.</p>
+      </div>
+      <div class="process-step reveal d3">
+        <div class="process-num">3</div>
+        <h4>Съёмка</h4>
+        <p>Снимаем в оговоренные сроки.</p>
+      </div>
+      <div class="process-step reveal d4">
+        <div class="process-num">4</div>
+        <h4>Монтаж и сдача</h4>
+        <p>Черновой монтаж на правки, потом финальная версия.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Стоимость</span>
+      <h2 class="section-title">Сколько стоит видео</h2>
+      <p class="section-sub">Ориентировочные цены. Точная стоимость зависит от количества смен, локаций и объёма постпродакшена — обсудим на созвоне.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-card reveal d1">
+        <span class="tag">Точечная задача</span>
+        <h3>Видеосъёмка в течение часа</h3>
+        <span class="price">от 4 500 ₽/час</span>
+        <p>Интервью, событие, докадры к уже отснятому материалу — когда не нужен полный цикл производства, а нужны конкретные кадры.</p>
+      </div>
+
+      <div class="price-card reveal d2">
+        <span class="tag">Популярный формат</span>
+        <h3>Презентационное видео, 8–10 минут</h3>
+        <span class="price">от 55 000 ₽</span>
+        <p>Сценарий, съёмка, монтаж — видео, которое рассказывает о вашем деле и превращает просмотр в доверие клиента.</p>
+      </div>
+
+      <div class="price-card reveal d3">
+        <span class="tag">Полный цикл</span>
+        <h3>Проект от 13 минут</h3>
+        <span class="price">от 85 000 ₽</span>
+        <p>Развёрнутый сценарий, несколько локаций, углублённая проработка истории — для сложных задач, презентации инвесторам или демонстрации видео о вашей организации на выставке.</p>
+      </div>
+
+      <div class="price-card reveal d4">
+        <span class="tag">Для соцсетей</span>
+        <h3>Reels-сопровождение</h3>
+        <span class="price">15 роликов — от 35 000 ₽</span>
+        <p>Серия коротких вертикальных видео для набора подписчиков и охватов. Уточним цену после определения временных затрат на съёмку, используемой техники. Подробности обсудим при личной встрече или видеозвонке.</p>
+      </div>
+    </div>
+
+    <p class="price-note reveal">Цены актуальны для региональных съёмок. Финальная смета зависит от локации, используемой техники, сложности обработки видео. В письме, или на видеозвонке, обсудим подробности, и точно рассчитаем смету вашего видеопроекта.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="images/svyatoslav.jpg" alt="Святослав Гребешов">
+      </div>
+      <div class="about-text reveal">
+        <span class="section-tag">Обо мне</span>
+        <h2>Святослав Гребешов, режиссёр и оператор</h2>
+        <p>Снимаю видео 18 лет — работал с Первым каналом, «Россией 1», НТВ, Федеральным казначейством России, Петрозаводским государственным университетом и другими заказчиками.</p>
+        <p>Веду каждый проект лично — от сценария до финального монтажа — и привлекаю операторов и режиссёров под конкретную задачу. Снимаю на Sony, Canon, DJI и BlackMagic.</p>
+        <div class="chips">
+          <span class="chip">Рекламные ролики</span>
+          <span class="chip">Клипы</span>
+          <span class="chip">Документалистика</span>
+          <span class="chip">Свадьбы</span>
+          <span class="chip">Корпоративное видео</span>
+          <span class="chip">Пилоты и сериалы</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Частые вопросы</span>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>Сколько времени занимает съёмка ролика?</summary>
+        <p>От брифа до готового видео обычно 2–4 недели — зависит от сложности сценария и количества локаций.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Что нужно подготовить перед съёмкой?</summary>
+        <p>Расскажите о задаче и целевой аудитории — сценарий и план съёмки подготовлю я.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Как проходит оплата?</summary>
+        <p>Обычно двумя частями — после утверждения сценария и после сдачи готового видео. Работаю как самозанятый.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Вы работаете только в своём регионе?</summary>
+        <p>Выезжаю на съёмки в другие регионы — стоимость обсуждаем отдельно с учётом логистики.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Начать проект</span>
+      <h2 class="section-title">Давайте обсудим ваше видео</h2>
+      <p class="section-sub">Оставьте заявку — отвечу в течение дня и подготовлю предварительную смету.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M6 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2z"/></svg></div>
+          <div>
+            <h4>Телефон</h4>
+            <p><a href="tel:+79216232171">+7 921 623-21-71</a></p>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg></div>
+          <div>
+            <h4>Email</h4>
+            <p><a href="mailto:sgptz@yandex.ru">sgptz@yandex.ru</a></p>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+          <div>
+            <h4>Мессенджеры</h4>
+            <p><a href="https://t.me/sgptz" target="_blank" rel="noopener">Telegram</a> · <a href="https://vk.me/ptzvideo" target="_blank" rel="noopener">VK</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap reveal">
+        <iframe src="https://forms.yandex.ru/u/6a2319f2e010db13a53f26c7?iframe=1" loading="lazy" title="Форма заявки"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="images/logo.png" alt="С-Видео">
+      <span>С-Видео</span>
+      <span class="footer-copy">© <span id="year"></span> Видеопродакшн «С-Видео» · Самозанятый Святослав Гребешов</span>
+    </div>
+    <div class="footer-social">
+      <a href="https://t.me/sgptz" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M9.99 15.99l-.38 4.13c.55 0 .78-.24 1.07-.52l2.56-2.45 5.31 3.9c.97.54 1.66.26 1.92-.9l3.48-16.3c.34-1.57-.57-2.18-1.6-1.8L1.6 9.6C.07 10.2.09 11.06 1.34 11.44l5.9 1.84L20.7 5.2c.6-.4 1.15-.18.7.24"/></svg>
+      </a>
+      <a href="https://vk.me/ptzvideo" target="_blank" rel="noopener" aria-label="VK">
+        <svg viewBox="0 0 24 24"><path d="M15.68 0H8.32C1.59 0 0 1.59 0 8.32v7.36C0 22.41 1.59 24 8.32 24h7.36C22.41 24 24 22.41 24 15.68V8.32C24 1.59 22.41 0 15.68 0zm3.69 17.12h-1.74c-.66 0-.86-.53-2.05-1.72-1.03-1.03-1.49-1.17-1.74-1.17-.36 0-.46.1-.46.59v1.58c0 .42-.14.68-1.25.68-1.85 0-3.9-1.12-5.34-3.2-2.17-3.06-2.79-5.25-2.79-5.68 0-.26.1-.5.59-.5h1.74c.44 0 .61.2.78.68.86 2.49 2.3 4.67 2.9 4.67.22 0 .32-.1.32-.66V9.73c-.07-1.19-.71-1.29-.71-1.72 0-.2.17-.4.44-.4h2.74c.37 0 .51.2.51.64v3.48c0 .37.17.51.27.51.22 0 .41-.14.81-.54 1.25-1.41 2.15-3.57 2.15-3.57.12-.25.32-.49.76-.49h1.74c.53 0 .64.27.53.64-.22 1.02-2.35 4.03-2.35 4.03-.19.3-.25.44 0 .78.19.25.8.78 1.2 1.25.75.85 1.32 1.56 1.47 2.05.17.47-.08.72-.57.72z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Мобильное меню
+  const menuOpenBtn = document.getElementById('menuOpenBtn');
+  const menuCloseBtn = document.getElementById('menuCloseBtn');
+  const mobilePanel = document.getElementById('mobilePanel');
+  const scrim = document.getElementById('scrim');
+
+  function openMenu(){ mobilePanel.classList.add('open'); scrim.classList.add('open'); }
+  function closeMenu(){ mobilePanel.classList.remove('open'); scrim.classList.remove('open'); }
+
+  menuOpenBtn.addEventListener('click', openMenu);
+  menuCloseBtn.addEventListener('click', closeMenu);
+  scrim.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMenu));
+
+  // Портфолио — раскрытие описания по тапу на мобильных
+  document.querySelectorAll('.portfolio-info').forEach(function(info){
+    info.addEventListener('click', function(){
+      info.closest('.portfolio-card').classList.toggle('is-open');
+    });
+  });
+
+  // Плавная прокрутка с учётом высоты шапки
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+    anchor.addEventListener('click', function(e){
+      const id = this.getAttribute('href');
+      if (id === '#') return;
+      const target = document.querySelector(id);
+      if (target){
+        e.preventDefault();
+        const navHeight = document.querySelector('.topnav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight + 1;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Появление секций при скролле
+  try {
+    const revealEls = document.querySelectorAll('.reveal');
+    revealEls.forEach(el => {
+      if (el.getBoundingClientRect().top > window.innerHeight * 0.92) el.classList.add('pre-reveal');
+    });
+    function checkReveal(){
+      revealEls.forEach(el => {
+        if (!el.classList.contains('pre-reveal')) return;
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
+          el.classList.remove('pre-reveal');
+          el.classList.add('in-view');
+        }
+      });
+    }
+    window.addEventListener('scroll', checkReveal, { passive:true });
+    window.addEventListener('resize', checkReveal);
+  } catch(e) {}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Портфолио — «С-Видео»</title>
+<meta name="description" content="Примеры работ видеопродакшна «С-Видео»: документальное кино, событийное видео, свадьбы, реклама">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-2:#111113;
+    --fg:#f2f0eb;
+    --muted:#9a9a9f;
+    --teal:#2ee6d6;
+    --orange:#ff7a3c;
+    --gold:#f4c04a;
+    --line:rgba(255,255,255,.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{ background:var(--bg); scroll-behavior:smooth; }
+
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(46,230,214,.08), transparent 45%),
+      radial-gradient(ellipse at 85% 15%, rgba(255,122,60,.08), transparent 45%),
+      var(--bg);
+    color:var(--fg);
+    font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .grain{
+    position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.045; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  section{ padding:100px 6vw; position:relative; }
+  .wrap{ max-width:1080px; margin:0 auto; }
+
+  .back-link{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin:32px 6vw 0;
+    color:var(--muted);
+    text-decoration:none;
+    font-size:.92rem;
+    transition:color .3s ease;
+  }
+  .back-link:hover{ color:var(--teal); }
+
+  /* ---------- HEADER ---------- */
+  .page-head{
+    text-align:center;
+    padding:60px 6vw 20px;
+  }
+  .kicker{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border:1px solid var(--line);
+    padding:8px 18px;
+    border-radius:999px;
+    margin-bottom:28px;
+  }
+  .kicker b{ color:var(--orange); font-weight:700; }
+
+  h1{
+    font-size:clamp(2rem, 5vw, 3.2rem);
+    font-weight:800;
+    line-height:1.15;
+    letter-spacing:-.01em;
+    background:linear-gradient(100deg, var(--teal) 0%, var(--fg) 40%, var(--orange) 70%, var(--gold) 100%);
+    background-size:220% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .page-head p.lead{
+    margin:22px auto 0;
+    max-width:640px;
+    font-size:clamp(1rem, 2vw, 1.15rem);
+    color:var(--muted);
+    line-height:1.6;
+  }
+
+  /* ---------- PORTFOLIO GRID ---------- */
+  .portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px;
+  }
+  .portfolio-card{
+    background:linear-gradient(165deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease;
+  }
+  .portfolio-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(255,255,255,.22);
+    box-shadow:0 24px 50px rgba(0,0,0,.45), 0 0 40px rgba(46,230,214,.1);
+  }
+  .video-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+  }
+  .video-wrap iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:none;
+  }
+  .portfolio-info{ padding:22px 26px; cursor:pointer; }
+  .portfolio-info .tag{
+    display:inline-block;
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:10px;
+  }
+  .portfolio-info h3{ font-size:1.15rem; font-weight:700; line-height:1.35; }
+  .portfolio-info p{
+    font-size:.92rem; color:var(--muted); line-height:1.6;
+    max-height:0; opacity:0; margin-top:0; overflow:hidden;
+    transition:max-height .45s cubic-bezier(.2,.7,.2,1), opacity .35s ease, margin-top .35s ease;
+  }
+  .portfolio-card:hover .portfolio-info p,
+  .portfolio-card.is-open .portfolio-info p{
+    max-height:120px; opacity:1; margin-top:10px;
+  }
+
+  @media (max-width:760px){
+    .portfolio-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- CHANNELS ---------- */
+  .channels{ text-align:center; margin-top:60px; }
+  .channels h3{
+    font-size:clamp(1.4rem, 3vw, 1.9rem);
+    font-weight:800;
+    margin-bottom:30px;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    display:inline-block;
+  }
+  .channel-links{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:18px;
+  }
+  .channel-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:16px 30px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--line);
+    border-radius:12px;
+    color:var(--fg);
+    text-decoration:none;
+    font-weight:600;
+    font-size:.95rem;
+    transition:all .3s ease;
+  }
+  .channel-btn:hover{
+    background:rgba(255,255,255,.08);
+    border-color:rgba(255,255,255,.25);
+    transform:translateY(-3px);
+  }
+
+  /* ---------- CTA ---------- */
+  .final-cta{ text-align:center; padding-top:20px; }
+  .cta{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    padding:20px 46px;
+    font-size:1.05rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:#0a0a0a;
+    background:linear-gradient(100deg, var(--teal), var(--gold), var(--orange));
+    background-size:220% auto;
+    border:none;
+    border-radius:999px;
+    text-decoration:none;
+    box-shadow:0 10px 40px rgba(255,122,60,.25), 0 0 0 1px rgba(255,255,255,.06);
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), background-position .6s ease;
+  }
+  .cta:hover{ transform:translateY(-4px) scale(1.04); background-position:100% 50%; }
+  .cta svg{ width:20px; height:20px; fill:#0a0a0a; }
+
+  footer{
+    text-align:center;
+    padding:30px 6vw 44px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:.8rem;
+    letter-spacing:.05em;
+    margin-top:40px;
+  }
+
+  @media (max-width:600px){
+    section{ padding:60px 6vw; }
+    .cta{ padding:18px 32px; font-size:.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<a class="back-link" href="landing.html">← На главную</a>
+
+<div class="page-head">
+  <div class="kicker">Видеопродакшн <b>«С-Видео»</b></div>
+  <h1>Портфолио</h1>
+  <p class="lead">Каждый проект — своя история и своя задача. Вот несколько примеров того, что мы уже делали.</p>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card">
+        <div class="video-wrap">
+          <iframe src="https://vkvideo.ru/video_ext.php?oid=-14036747&id=456239108&hash=ff6ebc79f808c635"
+                  allow="clipboard-write; autoplay" allowfullscreen title="Беломорско-Балтийский канал 90 лет"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Документальный фильм</span>
+          <h3>Беломорско-Балтийский канал — 90 лет</h3>
+          <p>Сценарий, съёмка, озвучание, монтаж, цветокоррекция.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="video-wrap">
+          <iframe src="https://vkvideo.ru/video_ext.php?oid=-14036747&id=456239113&hash=39a062ddc76def15"
+                  allow="clipboard-write; autoplay" allowfullscreen title="Дни Эрмитажа в Петрозаводске"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Видео о событии</span>
+          <h3>Дни Эрмитажа в Петрозаводске — проект Росатома и Республики Карелия</h3>
+          <p>Сценарий, видеосъёмка, монтаж, цветокоррекция.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="video-wrap">
+          <iframe src="https://rutube.ru/play/embed/3076869dc47e68226e300b2ea06e2c68"
+                  allow="clipboard-write; autoplay" allowfullscreen title="Свадебный фильм премиум-класса"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Свадебное видео</span>
+          <h3>Свадебный фильм премиум-класса</h3>
+          <p>Кинематографичная съёмка, монтаж.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="video-wrap">
+          <iframe src="https://rutube.ru/play/embed/82d1f4805a1ded31ea4a23a1f92cd064"
+                  allow="clipboard-write; autoplay" allowfullscreen title="Рекламный ролик для Мегафон"></iframe>
+        </div>
+        <div class="portfolio-info">
+          <span class="tag">Реклама</span>
+          <h3>Рекламный ролик для компании «Мегафон»</h3>
+          <p>Съёмка, видеомонтаж.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="channels">
+      <h3>Больше работ — на наших каналах</h3>
+      <div class="channel-links">
+        <a class="channel-btn" href="https://vkvideo.ru/@ptzvideo/all" target="_blank" rel="noopener">VK Видео</a>
+        <a class="channel-btn" href="https://rutube.ru/channel/24044213/videos/" target="_blank" rel="noopener">RuTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <a class="cta" href="ceny.html">
+    <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+    Смотреть цены
+  </a>
+</section>
+
+<footer>
+  © <span id="year"></span> Видеопродакшн «С-Видео»
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  document.querySelectorAll('.portfolio-info').forEach(function(info){
+    info.addEventListener('click', function(){
+      info.closest('.portfolio-card').classList.toggle('is-open');
+    });
+  });
+</script>
+
+</body>
+</html>

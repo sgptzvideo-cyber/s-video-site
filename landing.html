@@ -56,6 +56,8 @@
 
   /* ---------- HERO ---------- */
   .hero{
+    position:relative;
+    overflow:hidden;
     min-height:96svh;
     display:flex;
     flex-direction:column;
@@ -64,6 +66,19 @@
     text-align:center;
     padding:80px 6vw 60px;
   }
+  .hero-deco{
+    position:absolute;
+    top:50%; left:50%;
+    width:min(900px, 130vw);
+    height:min(900px, 130vw);
+    transform:translate(-50%,-50%);
+    opacity:.14;
+    z-index:0;
+    pointer-events:none;
+    animation:hero-spin 140s linear infinite;
+  }
+  @keyframes hero-spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+  .hero-content{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
   .kicker{
     display:inline-block;
     font-size:12px;
@@ -278,26 +293,59 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="kicker">Видеопродакшн <b>«С-Видео»</b></div>
-  <h1>Презентационное видео о вашем деле</h1>
-  <p class="lead">Создаём видео, которое доносит до зрителя смыслы вашего бизнеса — и превращает просмотр в доверие, заявку или продажу.</p>
+  <svg class="hero-deco" viewBox="0 0 400 400" aria-hidden="true">
+    <defs>
+      <linearGradient id="apertureGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#2ee6d6"/>
+        <stop offset="50%" stop-color="#f4c04a"/>
+        <stop offset="100%" stop-color="#ff7a3c"/>
+      </linearGradient>
+    </defs>
+    <circle cx="200" cy="200" r="180" fill="none" stroke="url(#apertureGrad)" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="150" fill="none" stroke="url(#apertureGrad)" stroke-width="1"/>
+    <g stroke="url(#apertureGrad)" stroke-width="3" stroke-linecap="round">
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(0 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(45 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(90 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(135 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(180 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(225 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(270 200 200)"/>
+      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(315 200 200)"/>
+    </g>
+    <g fill="url(#apertureGrad)" opacity=".55">
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(0 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(51.4 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(102.8 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(154.2 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(205.6 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(257 200 200)"/>
+      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(308.4 200 200)"/>
+    </g>
+  </svg>
 
-  <div class="hero-cta">
-    <a class="cta" href="mailto:sgptz@yandex.ru?subject=Презентационное%20видео%20для%20бизнеса">
-      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-      Оставить заявку
-    </a>
-  </div>
+  <div class="hero-content">
+    <div class="kicker">Видеопродакшн <b>«С-Видео»</b></div>
+    <h1>Презентационное видео о вашем деле</h1>
+    <p class="lead">Создаём видео, которое доносит до зрителя смыслы вашего бизнеса — и превращает просмотр в доверие, заявку или продажу.</p>
 
-  <div class="contact-links">
-    <a href="mailto:sgptz@yandex.ru">
-      <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg>
-      sgptz@yandex.ru
-    </a>
-    <a href="tel:+79216232171">
-      <svg viewBox="0 0 24 24"><path d="M6 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2z"/></svg>
-      8 921 623 21 71
-    </a>
+    <div class="hero-cta">
+      <a class="cta" href="mailto:sgptz@yandex.ru?subject=Презентационное%20видео%20для%20бизнеса">
+        <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+        Оставить заявку
+      </a>
+    </div>
+
+    <div class="contact-links">
+      <a href="mailto:sgptz@yandex.ru">
+        <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg>
+        sgptz@yandex.ru
+      </a>
+      <a href="tel:+79216232171">
+        <svg viewBox="0 0 24 24"><path d="M6 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2z"/></svg>
+        8 921 623 21 71
+      </a>
+    </div>
   </div>
 </section>
 
@@ -328,12 +376,12 @@
       </div>
 
       <div class="card reveal d3">
-        <span class="stat">8+</span>
+        <span class="stat">18+</span>
         <div class="card-icon" style="margin-top:-4px;">
           <svg viewBox="0 0 24 24"><path d="M12 2l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L12 15.9 6.4 19l1.4-6.3-4.8-4.3 6.4-.6z"/></svg>
         </div>
-        <h3>Более 8 лет на рынке видеопроизводства</h3>
-        <p>Работаем на результат — от идеи до финального монтажа. За это время мы выстроили процессы так, чтобы минимизировать риски и лишние правки: у нас есть отработанные сценарии для разных ниш, понимание, какие форматы лучше работают в соцсетях и на сайтах, и команда, которая закрывает все этапы без потери качества. Вы экономите время и нервы — мы заранее знаем, где могут быть «подводные камни».</p>
+        <h3>Более 18 лет на рынке и 250+ реализованных проектов</h3>
+        <p>Работали с Первым каналом, «Россией 1», НТВ, Федеральным казначейством России, Петрозаводским государственным университетом и другими крупными заказчиками. За это время мы выстроили процессы так, чтобы минимизировать риски и лишние правки — вы получаете предсказуемый результат без потери качества.</p>
       </div>
     </div>
   </div>
