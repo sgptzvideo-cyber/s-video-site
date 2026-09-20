@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Цены — «С-Видео»</title>
+<meta name="description" content="Стоимость услуг видеопродакшна «С-Видео»: съёмка, презентационные видео, сопровождение в соцсетях">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-2:#111113;
+    --fg:#f2f0eb;
+    --muted:#9a9a9f;
+    --teal:#2ee6d6;
+    --orange:#ff7a3c;
+    --gold:#f4c04a;
+    --line:rgba(255,255,255,.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{ background:var(--bg); scroll-behavior:smooth; }
+
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(46,230,214,.08), transparent 45%),
+      radial-gradient(ellipse at 85% 15%, rgba(255,122,60,.08), transparent 45%),
+      var(--bg);
+    color:var(--fg);
+    font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .grain{
+    position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.045; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  section{ padding:100px 6vw; position:relative; }
+  .wrap{ max-width:1080px; margin:0 auto; }
+
+  .back-link{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin:32px 6vw 0;
+    color:var(--muted);
+    text-decoration:none;
+    font-size:.92rem;
+    transition:color .3s ease;
+  }
+  .back-link:hover{ color:var(--teal); }
+
+  /* ---------- HEADER ---------- */
+  .page-head{
+    text-align:center;
+    padding:60px 6vw 20px;
+  }
+  .kicker{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border:1px solid var(--line);
+    padding:8px 18px;
+    border-radius:999px;
+    margin-bottom:28px;
+  }
+  .kicker b{ color:var(--orange); font-weight:700; }
+
+  h1{
+    font-size:clamp(2rem, 5vw, 3.2rem);
+    font-weight:800;
+    line-height:1.15;
+    letter-spacing:-.01em;
+    background:linear-gradient(100deg, var(--teal) 0%, var(--fg) 40%, var(--orange) 70%, var(--gold) 100%);
+    background-size:220% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .page-head p.lead{
+    margin:22px auto 0;
+    max-width:600px;
+    font-size:clamp(1rem, 2vw, 1.15rem);
+    color:var(--muted);
+    line-height:1.6;
+  }
+
+  /* ---------- PRICING CARDS ---------- */
+  .price-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:24px;
+  }
+  .price-card{
+    position:relative;
+    background:linear-gradient(165deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:34px 30px;
+    display:flex;
+    flex-direction:column;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease;
+  }
+  .price-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(255,255,255,.22);
+    box-shadow:0 24px 50px rgba(0,0,0,.45), 0 0 40px rgba(46,230,214,.1);
+  }
+  .price-card h3{ font-size:1.2rem; font-weight:700; margin-bottom:10px; }
+  .price-card .price{
+    font-size:2rem; font-weight:800;
+    background:linear-gradient(90deg, var(--teal), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:14px;
+    display:block;
+  }
+  .price-card p{ font-size:.95rem; color:var(--muted); line-height:1.65; flex-grow:1; }
+  .price-card .tag{
+    display:inline-block;
+    align-self:flex-start;
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:16px;
+  }
+
+  @media (max-width:760px){
+    .price-grid{ grid-template-columns:1fr; }
+  }
+
+  .note{
+    max-width:720px;
+    margin:40px auto 0;
+    text-align:center;
+    color:var(--muted);
+    font-size:.92rem;
+    line-height:1.7;
+    border-top:1px solid var(--line);
+    padding-top:32px;
+  }
+
+  /* ---------- CTA ---------- */
+  .final-cta{ text-align:center; padding-top:40px; }
+  .cta{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    padding:20px 46px;
+    font-size:1.05rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:#0a0a0a;
+    background:linear-gradient(100deg, var(--teal), var(--gold), var(--orange));
+    background-size:220% auto;
+    border:none;
+    border-radius:999px;
+    text-decoration:none;
+    box-shadow:0 10px 40px rgba(255,122,60,.25), 0 0 0 1px rgba(255,255,255,.06);
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), background-position .6s ease;
+  }
+  .cta:hover{ transform:translateY(-4px) scale(1.04); background-position:100% 50%; }
+  .cta svg{ width:20px; height:20px; fill:#0a0a0a; }
+
+  .contact-links{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:26px;
+    margin-top:26px;
+  }
+  .contact-links a{
+    display:inline-flex; align-items:center; gap:8px;
+    color:var(--muted); text-decoration:none; font-size:.98rem;
+    transition:color .3s ease;
+  }
+  .contact-links a svg{ width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; }
+  .contact-links a:hover{ color:var(--teal); }
+
+  footer{
+    text-align:center;
+    padding:30px 6vw 44px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:.8rem;
+    letter-spacing:.05em;
+  }
+
+  @media (max-width:600px){
+    section{ padding:60px 6vw; }
+    .cta{ padding:18px 32px; font-size:.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<a class="back-link" href="landing.html">← На главную</a>
+
+<div class="page-head">
+  <div class="kicker">Видеопродакшн <b>«С-Видео»</b></div>
+  <h1>Сколько стоит видео</h1>
+  <p class="lead">Ориентировочные цены. Точная стоимость зависит от количества смен, локаций и объёма постпродакшена — обсудим на созвоне.</p>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="price-grid">
+      <div class="price-card">
+        <span class="tag">Точечная задача</span>
+        <h3>Видеосъёмка в течение часа</h3>
+        <span class="price">от 4 500 ₽/час</span>
+        <p>Интервью, событие, докадры к уже отснятому материалу — когда не нужен полный цикл производства, а нужны конкретные кадры.</p>
+      </div>
+
+      <div class="price-card">
+        <span class="tag">Популярный формат</span>
+        <h3>Презентационное видео, 8–10 минут</h3>
+        <span class="price">от 55 000 ₽</span>
+        <p>Сценарий, съёмка, монтаж — видео, которое рассказывает о вашем деле и превращает просмотр в доверие клиента.</p>
+      </div>
+
+      <div class="price-card">
+        <span class="tag">Полный цикл</span>
+        <h3>Проект от 13 минут</h3>
+        <span class="price">от 85 000 ₽</span>
+        <p>Развёрнутый сценарий, несколько локаций, углублённая проработка истории — для сложных задач, презентации инвесторам или демонстрации видео о вашей организации на выставке.</p>
+      </div>
+
+      <div class="price-card">
+        <span class="tag">Для соцсетей</span>
+        <h3>Reels-сопровождение</h3>
+        <span class="price">15 роликов — от 35 000 ₽</span>
+        <p>Серия коротких вертикальных видео для набора подписчиков и охватов. Уточним цену после определения временных затрат на съёмку, используемой техники. Подробности обсудим при личной встрече или видеозвонке.</p>
+      </div>
+    </div>
+
+    <p class="note">Цены актуальны для региональных съёмок. Финальная смета зависит от локации, используемой техники, сложности обработки видео. В письме, или на видеозвонке, обсудим подробности, и точно рассчитаем смету вашего видеопроекта.</p>
+  </div>
+</section>
+
+<section class="final-cta">
+  <a class="cta" href="mailto:sgptz@yandex.ru?subject=Вопрос%20по%20ценам%20—%20С-Видео">
+    <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+    Обсудить проект
+  </a>
+
+  <div class="contact-links">
+    <a href="mailto:sgptz@yandex.ru">
+      <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 6l9 7 9-7"/></svg>
+      sgptz@yandex.ru
+    </a>
+    <a href="tel:+79216232171">
+      <svg viewBox="0 0 24 24"><path d="M6 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2z"/></svg>
+      8 921 623 21 71
+    </a>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> Видеопродакшн «С-Видео» — цены актуальны на дату визита сайта
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
