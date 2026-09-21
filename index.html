@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>«С-Видео» — видеопродакшн Святослава Гребешова</title>
-<meta name="description" content="Снимаем видео, которое продаёт: рекламные ролики, презентационные фильмы, корпоративное видео и свадебные истории. 18 лет опыта, съёмки для Первого канала, «России 1» и НТВ.">
+<meta name="description" content="Снимаем видео, которое продаёт: рекламные ролики, презентационные фильмы, корпоративное видео и свадебные истории. 18 лет опыта, съёмки для Первого канала, НТВ, ОТР и телеканала «Мир».">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0a0a0a;
@@ -25,10 +28,11 @@
       radial-gradient(ellipse at 85% 15%, rgba(255,122,60,.08), transparent 45%),
       var(--bg);
     color:var(--fg);
-    font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+    font-family:'Inter', 'Segoe UI', Arial, Helvetica, sans-serif;
     overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
+  h1, h2, h3, h4, .brand span, .footer-brand span{ font-family:'Montserrat', 'Segoe UI', Arial, sans-serif; }
 
   .grain{
     position:fixed; inset:0; z-index:9999; pointer-events:none;
@@ -60,11 +64,11 @@
   }
   .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
   .brand img{ width:36px; height:36px; object-fit:contain; }
-  .brand span{ font-weight:800; font-size:1.05rem; letter-spacing:-.01em; }
+  .brand span{ font-weight:700; font-size:1.25rem; letter-spacing:-.01em; }
 
   .nav-links{ display:flex; align-items:center; gap:32px; }
   .nav-links a{
-    font-size:.92rem; color:var(--muted); text-decoration:none;
+    font-size:.875rem; color:var(--muted); text-decoration:none;
     transition:color .25s ease;
   }
   .nav-links a:hover{ color:var(--teal); }
@@ -72,7 +76,7 @@
   .nav-cta{
     display:inline-flex; align-items:center;
     padding:10px 22px;
-    font-size:.88rem; font-weight:700;
+    font-size:.875rem; font-weight:600;
     color:#0a0a0a;
     background:linear-gradient(100deg, var(--teal), var(--gold), var(--orange));
     background-size:220% auto;
@@ -124,14 +128,15 @@
     text-align:center;
     padding:120px 6vw 60px;
   }
-  .hero-deco{
-    position:absolute; top:50%; left:50%;
-    width:min(900px, 130vw); height:min(900px, 130vw);
-    transform:translate(-50%,-50%);
-    opacity:.14; z-index:0; pointer-events:none;
-    animation:hero-spin 140s linear infinite;
+  .hero-bg{ position:absolute; inset:0; z-index:0; }
+  .hero-bg img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hero-bg::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to bottom, rgba(10,10,10,.55) 0%, rgba(10,10,10,.55) 40%, var(--bg) 96%),
+      radial-gradient(ellipse at 50% 40%, rgba(10,10,10,.25), rgba(10,10,10,.75) 75%);
   }
-  @keyframes hero-spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
   .hero-content{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
 
   .kicker{
@@ -142,19 +147,21 @@
   .kicker b{ color:var(--orange); font-weight:700; }
 
   h1{
-    font-size:clamp(2.1rem, 5.4vw, 3.6rem); font-weight:800; line-height:1.12; letter-spacing:-.01em;
-    max-width:900px;
-    background:linear-gradient(100deg, var(--teal) 0%, var(--fg) 40%, var(--orange) 70%, var(--gold) 100%);
-    background-size:220% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
-    animation:shine 8s ease-in-out infinite;
-    filter:drop-shadow(0 0 30px rgba(46,230,214,.18));
+    font-size:3rem; font-weight:700; line-height:1.25; letter-spacing:-.01em;
+    max-width:900px; color:var(--fg);
   }
-  @keyframes shine{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+  @media (min-width:768px){ h1{ font-size:4.5rem; } }
+  @media (min-width:1024px){ h1{ font-size:6rem; } }
+  h1 .accent{
+    background:linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
 
   .hero p.lead{
-    margin-top:22px; max-width:640px; font-size:clamp(1.05rem, 2.2vw, 1.3rem);
+    margin-top:22px; max-width:640px; font-size:1.125rem;
     color:var(--muted); line-height:1.6;
   }
+  @media (min-width:768px){ .hero p.lead{ font-size:1.25rem; } }
 
   .hero-cta{ margin-top:44px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
 
@@ -197,10 +204,10 @@
     border-top:1px solid var(--line);
   }
   .stat-row .num{
-    font-size:clamp(1.8rem, 4vw, 2.4rem); font-weight:800;
-    background:linear-gradient(90deg, var(--teal), var(--gold));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+    font-size:1.875rem; font-weight:700;
+    color:var(--orange);
   }
+  @media (min-width:768px){ .stat-row .num{ font-size:2.25rem; } }
   .stat-row .label{ font-size:.85rem; color:var(--muted); margin-top:6px; }
 
   /* ---------- SECTION HEAD ---------- */
@@ -209,8 +216,9 @@
     display:inline-block; font-size:11px; letter-spacing:.3em; text-transform:uppercase;
     color:var(--orange); margin-bottom:14px;
   }
-  .section-title{ font-size:clamp(1.7rem, 3.6vw, 2.5rem); font-weight:800; letter-spacing:-.01em; }
-  .section-sub{ margin-top:14px; color:var(--muted); font-size:1.05rem; line-height:1.6; }
+  .section-title{ font-size:2.25rem; font-weight:700; letter-spacing:-.01em; }
+  @media (min-width:768px){ .section-title{ font-size:3rem; } }
+  .section-sub{ margin-top:14px; color:var(--muted); font-size:1rem; line-height:1.6; }
 
   /* ---------- PORTFOLIO ---------- */
   #portfolio{ background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
@@ -228,13 +236,14 @@
   .video-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:none; }
   .portfolio-info{ padding:22px 26px; cursor:pointer; }
   .portfolio-info .tag{ display:inline-block; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); margin-bottom:10px; }
-  .portfolio-info h3{ font-size:1.15rem; font-weight:700; line-height:1.35; }
+  .portfolio-info h3{ font-size:1.25rem; font-weight:700; line-height:1.35; }
   .portfolio-info p{
     font-size:.92rem; color:var(--muted); line-height:1.6;
     max-height:0; opacity:0; margin-top:0; overflow:hidden;
     transition:max-height .45s cubic-bezier(.2,.7,.2,1), opacity .35s ease, margin-top .35s ease;
   }
-  .portfolio-card:hover .portfolio-info p, .portfolio-card.is-open .portfolio-info p{ max-height:120px; opacity:1; margin-top:10px; }
+  .portfolio-info p.goal{ margin-top:8px; color:var(--fg); }
+  .portfolio-card:hover .portfolio-info p, .portfolio-card.is-open .portfolio-info p{ max-height:220px; opacity:1; margin-top:10px; }
 
   .channels{ text-align:center; margin-top:56px; }
   .channels h3{
@@ -269,14 +278,8 @@
     border:1px solid var(--line); margin-bottom:22px;
   }
   .card-icon svg{ width:28px; height:28px; fill:none; stroke:url(#iconGrad); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-  .card h3{ font-size:1.15rem; font-weight:700; line-height:1.35; margin-bottom:12px; }
+  .card h3{ font-size:1.25rem; font-weight:700; line-height:1.35; margin-bottom:12px; }
   .card p{ font-size:.94rem; color:var(--muted); line-height:1.65; }
-  .card .stat{
-    font-size:2.4rem; font-weight:800;
-    background:linear-gradient(90deg, var(--teal), var(--gold));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    margin-bottom:8px; display:block;
-  }
   @media (max-width:900px){ .cards{ grid-template-columns:1fr; } }
 
   /* ---------- PROCESS ---------- */
@@ -304,7 +307,7 @@
     transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease;
   }
   .price-card:hover{ transform:translateY(-6px); border-color:rgba(255,255,255,.22); box-shadow:0 24px 50px rgba(0,0,0,.45), 0 0 40px rgba(46,230,214,.1); }
-  .price-card h3{ font-size:1.2rem; font-weight:700; margin-bottom:10px; }
+  .price-card h3{ font-size:1.25rem; font-weight:700; margin-bottom:10px; }
   .price-card .price{
     font-size:2rem; font-weight:800;
     background:linear-gradient(90deg, var(--teal), var(--gold));
@@ -335,6 +338,23 @@
     .about-grid{ grid-template-columns:1fr; justify-items:center; text-align:center; }
     .chips{ justify-content:center; }
   }
+
+  /* ---------- BACKSTAGE ---------- */
+  .backstage-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
+  }
+  .backstage-grid a{
+    display:block; position:relative; aspect-ratio:4/3; border-radius:12px; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .backstage-grid img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+    filter:saturate(.92);
+  }
+  .backstage-grid a:hover img{ transform:scale(1.06); filter:saturate(1.05); }
+  @media (max-width:900px){ .backstage-grid{ grid-template-columns:repeat(3, 1fr); } }
+  @media (max-width:600px){ .backstage-grid{ grid-template-columns:repeat(2, 1fr); } }
 
   /* ---------- FAQ ---------- */
   .faq-item{ border-bottom:1px solid var(--line); padding:20px 4px; }
@@ -377,7 +397,7 @@
   }
   .footer-brand{ display:flex; align-items:center; gap:10px; }
   .footer-brand img{ width:32px; height:32px; object-fit:contain; }
-  .footer-brand span{ font-weight:800; }
+  .footer-brand span{ font-weight:700; font-size:1.25rem; }
   .footer-copy{ color:var(--muted); font-size:.8rem; margin-left:14px; }
   .footer-social{ display:flex; gap:14px; }
   .footer-social a{
@@ -405,11 +425,6 @@
   <defs>
     <linearGradient id="iconGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#2ee6d6"/>
-      <stop offset="100%" stop-color="#ff7a3c"/>
-    </linearGradient>
-    <linearGradient id="apertureGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#2ee6d6"/>
-      <stop offset="50%" stop-color="#f4c04a"/>
       <stop offset="100%" stop-color="#ff7a3c"/>
     </linearGradient>
   </defs>
@@ -449,34 +464,14 @@
 
 <!-- HERO -->
 <header class="hero">
-  <svg class="hero-deco" viewBox="0 0 400 400" aria-hidden="true">
-    <circle cx="200" cy="200" r="180" fill="none" stroke="url(#apertureGrad)" stroke-width="1.5"/>
-    <circle cx="200" cy="200" r="150" fill="none" stroke="url(#apertureGrad)" stroke-width="1"/>
-    <g stroke="url(#apertureGrad)" stroke-width="3" stroke-linecap="round">
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(0 200 200)"/>
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(45 200 200)"/>
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(90 200 200)"/>
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(135 200 200)"/>
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(180 200 200)"/>
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(225 200 200)"/>
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(270 200 200)"/>
-      <line x1="200" y1="24" x2="200" y2="64" transform="rotate(315 200 200)"/>
-    </g>
-    <g fill="url(#apertureGrad)" opacity=".55">
-      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(0 200 200)"/>
-      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(51.4 200 200)"/>
-      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(102.8 200 200)"/>
-      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(154.2 200 200)"/>
-      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(205.6 200 200)"/>
-      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(257 200 200)"/>
-      <path d="M200 90 L240 150 L200 150 Z" transform="rotate(308.4 200 200)"/>
-    </g>
-  </svg>
+  <div class="hero-bg">
+    <img src="images/hero-camera.png" alt="Съёмочная студия «С-Видео»">
+  </div>
 
   <div class="hero-content">
     <div class="kicker">Видеопродакшн <b>«С-Видео»</b></div>
-    <h1>Снимаем видео,<br>которое продаёт</h1>
-    <p class="lead">Рекламные ролики, презентационные фильмы, корпоративное видео и свадебные истории. 18 лет опыта, съёмки для Первого канала, «России 1» и НТВ.</p>
+    <h1>Снимаем видео,<br><span class="accent">которое продаёт</span></h1>
+    <p class="lead">Рекламные ролики, презентационные фильмы, корпоративное видео и свадебные истории. 18 лет опыта, съёмки для Первого канала, НТВ, ОТР и телеканала «Мир».</p>
 
     <div class="hero-cta">
       <a class="cta" href="#portfolio">
@@ -512,6 +507,7 @@
           <span class="tag">Документальный фильм</span>
           <h3>Беломорско-Балтийский канал — 90 лет</h3>
           <p>Сценарий, съёмка, озвучание, монтаж, цветокоррекция.</p>
+          <p class="goal">Цель видео: показать всемирно известное гидросооружение через день сегодняшний — работу и жизнь сотрудников канала сейчас.</p>
         </div>
       </div>
 
@@ -523,6 +519,7 @@
           <span class="tag">Видео о событии</span>
           <h3>Дни Эрмитажа в Петрозаводске — проект Росатома и Республики Карелия</h3>
           <p>Сценарий, видеосъёмка, монтаж, цветокоррекция.</p>
+          <p class="goal">Цель видео: показать событие «Дни Эрмитажа» в Республике Карелия под эгидой Росатома, отразить его значимость и участие горожан и гостей Карелии.</p>
         </div>
       </div>
 
@@ -534,6 +531,7 @@
           <span class="tag">Свадебное видео</span>
           <h3>Свадебный фильм премиум-класса</h3>
           <p>Кинематографичная съёмка, монтаж.</p>
+          <p class="goal">Цель видео: создать для семейного архива памятный фильм, передав тёплые эмоции этого дня.</p>
         </div>
       </div>
 
@@ -545,6 +543,7 @@
           <span class="tag">Реклама</span>
           <h3>Рекламный ролик для компании «Мегафон»</h3>
           <p>Съёмка, видеомонтаж.</p>
+          <p class="goal">Цель видео: на основе федеральных стандартов рекламной кампании показать блогеров и лидеров мнений региона и связать их с брендом «Мегафон».</p>
         </div>
       </div>
     </div>
@@ -582,16 +581,15 @@
           <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l4-4 4 4"/><circle cx="12" cy="13.5" r="3.2"/></svg>
         </div>
         <h3>Опыт работы с федеральными телеканалами</h3>
-        <p>Снимали для Первого канала, «России 1» и НТВ. Этот уровень дисциплины и качества переносим в коммерческие проекты — вы получаете результат, сопоставимый с ТВ-роликами, но в более гибких условиях.</p>
+        <p>Материалы студии регулярно выходят в эфире Первого канала, НТВ, «Общественного телевидения России» (ОТР) и телеканала «Мир». Этот уровень дисциплины и качества переносим в коммерческие проекты.</p>
       </div>
 
       <div class="card reveal d3">
-        <span class="stat">18+</span>
-        <div class="card-icon" style="margin-top:-4px;">
+        <div class="card-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L12 15.9 6.4 19l1.4-6.3-4.8-4.3 6.4-.6z"/></svg>
         </div>
         <h3>Более 18 лет на рынке и 250+ проектов</h3>
-        <p>Среди заказчиков — Федеральное казначейство России, Петрозаводский государственный университет, Карельская государственная филармония и другие. Процессы выстроены так, чтобы минимизировать риски и лишние правки.</p>
+        <p>Среди заказчиков и партнёров — Национальный музей Республики Карелия, Правительство Республики Карелия, «Мегафон», «Сбербанк», «Сегежа Групп» и другие. Процессы выстроены так, чтобы минимизировать риски и лишние правки.</p>
       </div>
     </div>
   </div>
@@ -609,12 +607,12 @@
       <div class="process-step reveal d1">
         <div class="process-num">1</div>
         <h4>Заявка и бриф</h4>
-        <p>Рассказываете о задаче, я уточняю детали.</p>
+        <p>Рассказываете о задаче — мы уточняем детали.</p>
       </div>
       <div class="process-step reveal d2">
         <div class="process-num">2</div>
         <h4>Сценарий и смета</h4>
-        <p>Присылаю план видео и точную стоимость.</p>
+        <p>Присылаем план видео и точную стоимость.</p>
       </div>
       <div class="process-step reveal d3">
         <div class="process-num">3</div>
@@ -683,8 +681,10 @@
       <div class="about-text reveal">
         <span class="section-tag">Обо мне</span>
         <h2>Святослав Гребешов, режиссёр и оператор</h2>
-        <p>Снимаю видео 18 лет — работал с Первым каналом, «Россией 1», НТВ, Федеральным казначейством России, Петрозаводским государственным университетом и другими заказчиками.</p>
-        <p>Веду каждый проект лично — от сценария до финального монтажа — и привлекаю операторов и режиссёров под конкретную задачу. Снимаю на Sony, Canon, DJI и BlackMagic.</p>
+        <p>Руководитель видеостудии «С-Видео», профессиональный дипломированный режиссёр, выпускник Санкт-Петербургского Государственного университета культуры и искусств (мастерская Генриха Маранджьяна). Материалы студии регулярно появляются в эфире федеральных телеканалов: «Первый канал», «НТВ», «Общественное телевидение России» (ОТР), телеканал «Мир».</p>
+        <p>Студия «С-Видео» создаёт презентационные и документальные фильмы, рекламные и социальные видеоролики, организует видеотрансляции мероприятий. Среди заказчиков и партнёров студии — Национальный музей Республики Карелия, Администрация города Петрозаводска, Правительство Республики Карелия, компании «Мегафон», «Сбербанк», «Сегежа Групп», Инженерный центр пожарной робототехники «ЭФЭР».</p>
+        <p>Широкое общественное признание получил документальный фильм «Петрозаводск — город воинской славы» — первый фильм, посвящённый истории столицы Карелии. Фильм о 90-летии Беломорско-Балтийского канала «90 лет, соединяя моря и судьбы» был показан в сети кинотеатров Карелии и в эфире телекомпаний.</p>
+        <p>Фильмы о Национальном музее Республики Карелия и Музее Карельского фронта (г. Беломорск) демонстрировались на выставке «Россия» на ВДНХ в Москве — на стенде, представляющем Карелию.</p>
         <div class="chips">
           <span class="chip">Рекламные ролики</span>
           <span class="chip">Клипы</span>
@@ -694,6 +694,32 @@
           <span class="chip">Пилоты и сериалы</span>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKSTAGE -->
+<section id="backstage">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Бэкстейдж</span>
+      <h2 class="section-title">Съёмки изнутри</h2>
+      <p class="section-sub">Как проходит работа на площадке — от интервью и трансляций до съёмок на производстве.</p>
+    </div>
+
+    <div class="backstage-grid reveal">
+      <a href="images/backstage/001.jpg" target="_blank" rel="noopener"><img src="images/backstage/001.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/002.jpg" target="_blank" rel="noopener"><img src="images/backstage/002.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/003.jpg" target="_blank" rel="noopener"><img src="images/backstage/003.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/004.jpg" target="_blank" rel="noopener"><img src="images/backstage/004.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/005.jpg" target="_blank" rel="noopener"><img src="images/backstage/005.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/006.jpg" target="_blank" rel="noopener"><img src="images/backstage/006.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/007.jpg" target="_blank" rel="noopener"><img src="images/backstage/007.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/008.jpg" target="_blank" rel="noopener"><img src="images/backstage/008.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/009.jpg" target="_blank" rel="noopener"><img src="images/backstage/009.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/010.jpg" target="_blank" rel="noopener"><img src="images/backstage/010.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/011.jpg" target="_blank" rel="noopener"><img src="images/backstage/011.jpg" alt="Съёмка на площадке" loading="lazy"></a>
+      <a href="images/backstage/012.jpg" target="_blank" rel="noopener"><img src="images/backstage/012.jpg" alt="Съёмка на площадке" loading="lazy"></a>
     </div>
   </div>
 </section>
@@ -713,11 +739,11 @@
       </details>
       <details class="faq-item">
         <summary>Что нужно подготовить перед съёмкой?</summary>
-        <p>Расскажите о задаче и целевой аудитории — сценарий и план съёмки подготовлю я.</p>
+        <p>Расскажите о задаче и целевой аудитории — сценарий и план съёмки подготовим мы.</p>
       </details>
       <details class="faq-item">
         <summary>Как проходит оплата?</summary>
-        <p>Обычно двумя частями — после утверждения сценария и после сдачи готового видео. Работаю как самозанятый.</p>
+        <p>Обычно двумя частями — после утверждения сценария и после сдачи готового видео.</p>
       </details>
       <details class="faq-item">
         <summary>Вы работаете только в своём регионе?</summary>
@@ -733,7 +759,7 @@
     <div class="section-head reveal">
       <span class="section-tag">Начать проект</span>
       <h2 class="section-title">Давайте обсудим ваше видео</h2>
-      <p class="section-sub">Оставьте заявку — отвечу в течение дня и подготовлю предварительную смету.</p>
+      <p class="section-sub">Оставьте заявку — ответим в течение дня и подготовим предварительную смету.</p>
     </div>
 
     <div class="contact-grid">
@@ -762,7 +788,8 @@
       </div>
 
       <div class="form-wrap reveal">
-        <iframe src="https://forms.yandex.ru/u/6a2319f2e010db13a53f26c7?iframe=1" loading="lazy" title="Форма заявки"></iframe>
+        <script src="https://forms.yandex.ru/_static/embed.js"></script>
+        <iframe src="https://forms.yandex.ru/u/6a2319f2e010db13a53f26c7?iframe=1" name="ya-form-6a2319f2e010db13a53f26c7" loading="lazy" title="Форма заявки"></iframe>
       </div>
     </div>
   </div>
